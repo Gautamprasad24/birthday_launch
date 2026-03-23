@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎂 Happy Birthday! 🚀</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Dancing+Script:wght@700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #FFD700;
+    --pink: #FF6B9D;
+    --purple: #9B59B6;
+    --dark: #0a0010;
+    --star: #fff9c4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    overflow: hidden;
+    font-family: 'Playfair Display', serif;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* ========== STARS BACKGROUND ========== */
+  .stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--d) ease-in-out infinite alternate;
+  }
+  @keyframes twinkle {
+    from { opacity: 0.1; transform: scale(0.8); }
+    to   { opacity: 1;   transform: scale(1.2); }
+  }
+
+  /* ========== LAUNCH SCREEN ========== */
+  #launch-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #1a0030 0%, #0a0010 70%);
+  }
+
+  .launch-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2rem, 6vw, 4rem);
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 12px;
+    text-shadow: 0 0 30px rgba(255,215,0,0.6);
+    animation: floatText 3s ease-in-out infinite;
+  }
+  .launch-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: #e8b4d8;
+    margin-bottom: 50px;
+    letter-spacing: 3px;
+    text-align: center;
+  }
+  @keyframes floatText {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+
+  .btn-launch {
+    position: relative;
+    padding: 20px 60px;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: var(--dark);
+    background: linear-gradient(135deg, var(--gold), #FF8C42, var(--pink));
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    box-shadow: 0 0 40px rgba(255,215,0,0.5), 0 0 80px rgba(255,107,157,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+  }
+  .btn-launch::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 62px;
+    background: linear-gradient(135deg, var(--gold), var(--pink), var(--purple), var(--gold));
+    z-index: -1;
+    animation: borderSpin 3s linear infinite;
+    background-size: 300% 300%;
+  }
+  @keyframes borderSpin {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .btn-launch:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 60px rgba(255,215,0,0.8), 0 0 100px rgba(255,107,157,0.5);
+  }
+  .btn-launch:active { transform: scale(0.97); }
+
+  .sparkle-row {
+    display: flex; gap: 18px; margin-top: 30px;
+    font-size: 2rem;
+    animation: sparkleRow 2s ease-in-out infinite;
+  }
+  @keyframes sparkleRow {
+    0%,100% { opacity: 0.7; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.1); }
+  }
+
+  /* ========== CURTAIN SCREEN ========== */
+  #curtain-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .curtain-left, .curtain-right {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 50%;
+    background: linear-gradient(135deg, #8B0057 0%, #C0006A 40%, #FF4499 70%, #8B0057 100%);
+    transition: transform 1.8s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: 2;
+  }
+  .curtain-left  { left: 0;  transform: translateX(0); }
+  .curtain-right { right: 0; transform: translateX(0); }
+
+  /* Curtain folds */
+  .curtain-left::before, .curtain-left::after,
+  .curtain-right::before, .curtain-right::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 20px;
+    background: rgba(0,0,0,0.25);
+  }
+  .curtain-left::before  { right: 60px; }
+  .curtain-left::after   { right: 20px; }
+  .curtain-right::before { left: 60px; }
+  .curtain-right::after  { left: 20px; }
+
+  /* Gold fringe at top */
+  .curtain-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    z-index: 3;
+  }
+
+  .curtain-open .curtain-left  { transform: translateX(-100%); }
+  .curtain-open .curtain-right { transform: translateX(100%); }
+
+  /* Behind curtain: birthday reveal */
+  .curtain-reveal {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #200040 0%, var(--dark) 80%);
+    z-index: 1;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .hb-emoji { font-size: clamp(3rem, 8vw, 6rem); animation: bounceEmoji 0.6s ease-in-out infinite alternate; }
+  @keyframes bounceEmoji { from { transform: translateY(0) rotate(-5deg); } to { transform: translateY(-14px) rotate(5deg); } }
+
+  .hb-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    background: linear-gradient(135deg, var(--gold), var(--pink), #ff9de2, var(--gold));
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 2s linear infinite, fadeInUp 1s ease 2.5s both;
+    line-height: 1.1;
+  }
+  @keyframes shimmer { 0%{background-position:0%} 100%{background-position:300%} }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+  .hb-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    color: #e8b4d8;
+    letter-spacing: 4px;
+    margin-top: 10px;
+    animation: fadeInUp 1s ease 3s both;
+  }
+
+  /* ========== COUNTDOWN SCREEN ========== */
+  #countdown-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #0d0025 0%, #000008 80%);
+  }
+
+  .countdown-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    color: var(--pink);
+    letter-spacing: 8px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeInUp 0.5s ease 0.3s forwards;
+  }
+
+  #count-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(5rem, 20vw, 14rem);
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(255,215,0,0.8), 0 0 80px rgba(255,215,0,0.4);
+    line-height: 1;
+    animation: countPulse 1s ease-in-out infinite;
+    transition: all 0.3s;
+  }
+  @keyframes countPulse {
+    0%,100% { transform: scale(1); }
+    50%      { transform: scale(1.05); }
+  }
+  .count-flash {
+    animation: flash 0.3s ease !important;
+  }
+  @keyframes flash {
+    0%   { color: white; text-shadow: 0 0 80px white; transform: scale(1.3); }
+    100% { color: var(--gold); text-shadow: 0 0 40px rgba(255,215,0,0.8); transform: scale(1); }
+  }
+
+  .countdown-rings {
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,215,0,0.15);
+    animation: expandRing 1s ease-out infinite;
+  }
+  .countdown-rings:nth-child(2) { animation-delay: 0.3s; }
+  .countdown-rings:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes expandRing {
+    0%   { transform: scale(0.5); opacity: 0.8; }
+    100% { transform: scale(2);   opacity: 0; }
+  }
+
+  /* ========== ROCKET SCREEN ========== */
+  #rocket-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #050015 0%, #000005 80%);
+    overflow: hidden;
+  }
+
+  .rocket-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: rocketHover 2s ease-in-out infinite;
+  }
+  @keyframes rocketHover {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-15px); }
+  }
+
+  .rocket-svg { width: clamp(100px, 20vw, 160px); filter: drop-shadow(0 0 20px rgba(255,165,0,0.8)); }
+
+  .flame {
+    width: clamp(30px, 6vw, 50px);
+    margin-top: -4px;
+    animation: flameFlicker 0.15s ease-in-out infinite alternate;
+    transform-origin: top center;
+  }
+  @keyframes flameFlicker {
+    from { transform: scaleY(1) scaleX(1); }
+    to   { transform: scaleY(1.2) scaleX(0.85); }
+  }
+
+  .launch-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 900;
+    color: white;
+    letter-spacing: 10px;
+    margin-top: 40px;
+    text-shadow: 0 0 30px rgba(255,165,0,0.9);
+    animation: launchPulse 0.8s ease-in-out infinite alternate;
+  }
+  @keyframes launchPulse {
+    from { text-shadow: 0 0 20px orange; letter-spacing: 8px; }
+    to   { text-shadow: 0 0 50px orange, 0 0 100px rgba(255,165,0,0.5); letter-spacing: 12px; }
+  }
+
+  .rocket-launch-btn {
+    margin-top: 40px;
+    padding: 16px 50px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-weight: 700;
+    color: var(--dark);
+    background: linear-gradient(135deg, #FF8C00, var(--gold));
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    letter-spacing: 3px;
+    box-shadow: 0 0 30px rgba(255,140,0,0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .rocket-launch-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 60px rgba(255,140,0,0.9);
+  }
+
+  /* ========== ROCKET LAUNCH ANIMATION ========== */
+  #rocket-launch-anim {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: none;
+    overflow: hidden;
+    background: #000010;
+  }
+
+  .speed-stars {
+    position: absolute;
+    inset: 0;
+  }
+  .speed-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, white);
+    animation: speedLine var(--spd) linear infinite;
+    opacity: 0;
+  }
+  @keyframes speedLine {
+    0%   { transform: translateX(-100%); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateX(200%); opacity: 0; }
+  }
+
+  #flying-rocket {
+    position: absolute;
+    left: 50%;
+    bottom: -200px;
+    transform: translateX(-50%);
+    font-size: 80px;
+    animation: rocketFly 2s ease-in forwards;
+    filter: drop-shadow(0 0 20px orange);
+  }
+  @keyframes rocketFly {
+    0%   { bottom: -200px; opacity: 1; }
+    60%  { bottom: 50%; opacity: 1; }
+    80%  { bottom: 60%; opacity: 1; }
+    100% { bottom: 110%; opacity: 0; }
+  }
+
+  .launch-boom {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 200px;
+    opacity: 0;
+    animation: boom 0.6s ease-out 1.8s forwards;
+  }
+  @keyframes boom {
+    0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(3); }
+  }
+
+  /* ========== CONFETTI ========== */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 14px;
+    top: -20px;
+    border-radius: 2px;
+    animation: confettiFall var(--fall) linear var(--delay) forwards;
+    z-index: 100;
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg) translateX(var(--drift)); opacity: 0; }
+  }
+
+  /* iframe */
+  #website-frame {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: none;
+    flex-direction: column;
+  }
+  #website-frame iframe {
+    flex: 1;
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
+  .website-banner {
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    color: white;
+    text-align: center;
+    padding: 8px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+  }
+
+  /* Particles */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 200;
+    font-size: 1.5rem;
+    animation: particleFly var(--pt) ease-out forwards;
+  }
+  @keyframes particleFly {
+    0%   { transform: translate(0,0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--px), var(--py)) scale(0); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars BG -->
+<div class="stars" id="stars"></div>
+
+<!-- ===== SCREEN 1: LAUNCH BUTTON ===== -->
+<div id="launch-screen">
+  <div class="launch-title">🎂 A Special Surprise Awaits You! 🎂</div>
+  <div class="launch-sub">✨ CLICK TO BEGIN YOUR JOURNEY ✨</div>
+  <button class="btn-launch" onclick="startCurtain()">
+    🎀 Click Here, Sis! 🎀
+  </button>
+  <div class="sparkle-row">✨ 🌸 💖 🌸 ✨</div>
+</div>
+
+<!-- ===== SCREEN 2: CURTAIN ===== -->
+<div id="curtain-screen">
+  <div class="curtain-top"></div>
+  <div class="curtain-left"></div>
+  <div class="curtain-right"></div>
+  <div class="curtain-reveal">
+    <div class="hb-emoji">🎉</div>
+    <div class="hb-title">Happy Birthday<br>Sister!</div>
+    <div class="hb-sub">💖 You are so loved 💖</div>
+  </div>
+</div>
+
+<!-- ===== SCREEN 3: COUNTDOWN ===== -->
+<div id="countdown-screen">
+  <div class="countdown-rings"></div>
+  <div class="countdown-rings"></div>
+  <div class="countdown-rings"></div>
+  <div class="countdown-label">🚀 LAUNCHING IN...</div>
+  <div id="count-number">10</div>
+</div>
+
+<!-- ===== SCREEN 4: ROCKET ===== -->
+<div id="rocket-screen">
+  <div class="rocket-wrapper">
+    <!-- Rocket SVG -->
+    <svg class="rocket-svg" viewBox="0 0 100 180" xmlns="http://www.w3.org/2000/svg">
+      <!-- Body -->
+      <ellipse cx="50" cy="80" rx="22" ry="55" fill="#e8e8f0"/>
+      <ellipse cx="50" cy="80" rx="22" ry="55" fill="url(#rocketGrad)"/>
+      <!-- Nose -->
+      <ellipse cx="50" cy="28" rx="22" ry="28" fill="#FF4499"/>
+      <path d="M28 52 Q50 10 72 52 Z" fill="#FF4499"/>
+      <!-- Window -->
+      <circle cx="50" cy="72" r="12" fill="#4fc3f7" stroke="#aaa" stroke-width="2"/>
+      <circle cx="50" cy="72" r="8"  fill="#81d4fa"/>
+      <circle cx="46" cy="68" r="3"  fill="rgba(255,255,255,0.6)"/>
+      <!-- Fins -->
+      <path d="M28 110 L10 145 L28 130 Z" fill="#FF6B9D"/>
+      <path d="M72 110 L90 145 L72 130 Z" fill="#FF6B9D"/>
+      <!-- Stripe -->
+      <rect x="30" y="90" width="40" height="8" rx="4" fill="#FF4499" opacity="0.7"/>
+      <defs>
+        <linearGradient id="rocketGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#c8c8d8"/>
+          <stop offset="50%"  stop-color="#f0f0ff"/>
+          <stop offset="100%" stop-color="#a0a0b0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <!-- Flame -->
+    <svg class="flame" viewBox="0 0 50 60" xmlns="http://www.w3.org/2000/svg">
+      <path d="M25 0 Q10 20 15 40 Q20 55 25 60 Q30 55 35 40 Q40 20 25 0 Z" fill="url(#flameGrad)"/>
+      <path d="M25 15 Q17 30 20 45 Q22 54 25 60 Q28 54 30 45 Q33 30 25 15 Z" fill="rgba(255,255,180,0.8)"/>
+      <defs>
+        <linearGradient id="flameGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#fff176"/>
+          <stop offset="40%"  stop-color="#FF8C00"/>
+          <stop offset="100%" stop-color="#FF3300"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+  <div class="launch-text">LAUNCH</div>
+  <button class="rocket-launch-btn" onclick="launchRocket()">🚀 LAUNCH NOW! 🚀</button>
+</div>
+
+<!-- ===== SCREEN 5: ROCKET LAUNCH ANIMATION ===== -->
+<div id="rocket-launch-anim">
+  <div class="speed-stars" id="speed-stars"></div>
+  <div id="flying-rocket">🚀</div>
+  <div class="launch-boom">💥</div>
+</div>
+
+<!-- ===== SCREEN 6: WEBSITE ===== -->
+<div id="website-frame">
+  <div class="website-banner">🎂 Happy Birthday Sister! Welcome to VidyaTrade 🚀</div>
+  <iframe src="https://www.vidyatrade.com" title="VidyaTrade"></iframe>
+</div>
+
+<script>
+// ====== STARS ======
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 120; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 3 + 1;
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    top:${Math.random()*100}%;
+    --d:${Math.random()*3+2}s;
+    animation-delay:${Math.random()*3}s;
+  `;
+  starsEl.appendChild(s);
+}
+
+// ====== SPEED LINES ======
+const speedStars = document.getElementById('speed-stars');
+for (let i = 0; i < 30; i++) {
+  const l = document.createElement('div');
+  l.className = 'speed-line';
+  const w = Math.random()*200 + 100;
+  l.style.cssText = `
+    top:${Math.random()*100}%;
+    width:${w}px;
+    --spd:${Math.random()*0.5+0.3}s;
+    animation-delay:${Math.random()*0.5}s;
+  `;
+  speedStars.appendChild(l);
+}
+
+// ====== CONFETTI ======
+const colors = ['#FFD700','#FF6B9D','#9B59B6','#4FC3F7','#FF8C42','#fff'];
+function spawnConfetti(n = 60) {
+  for (let i = 0; i < n; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    const drift = (Math.random()-0.5)*300;
+    c.style.cssText = `
+      left:${Math.random()*100}vw;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      --fall:${Math.random()*3+2}s;
+      --delay:${Math.random()*2}s;
+      --drift:${drift}px;
+      transform:rotate(${Math.random()*360}deg);
+    `;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5500);
+  }
+}
+
+// ====== PARTICLES ON CLICK ======
+document.querySelector('.btn-launch').addEventListener('click', function(e) {
+  for (let i = 0; i < 12; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const angle = (i / 12) * 360;
+    const dist  = Math.random() * 120 + 60;
+    const rad   = angle * Math.PI / 180;
+    p.textContent = ['✨','🌸','💖','⭐','🎊'][Math.floor(Math.random()*5)];
+    p.style.cssText = `
+      left:${e.clientX}px; top:${e.clientY}px;
+      --px:${Math.cos(rad)*dist}px;
+      --py:${Math.sin(rad)*dist}px;
+      --pt:${Math.random()*0.6+0.4}s;
+    `;
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1200);
+  }
+});
+
+// ====== SCREEN TRANSITIONS ======
+
+function startCurtain() {
+  const ls = document.getElementById('launch-screen');
+  const cs = document.getElementById('curtain-screen');
+
+  ls.style.opacity = '0';
+  ls.style.transition = 'opacity 0.5s';
+
+  setTimeout(() => {
+    ls.style.display = 'none';
+    cs.style.display = 'flex';
+    spawnConfetti(40);
+
+    // Open curtains after short pause
+    setTimeout(() => {
+      cs.classList.add('curtain-open');
+      // After curtains open, wait then show countdown
+      setTimeout(() => {
+        showCountdown();
+      }, 12400);
+    }, 600);
+  }, 500);
+}
+
+function showCountdown() {
+  const cs = document.getElementById('curtain-screen');
+  const cd = document.getElementById('countdown-screen');
+
+  cs.style.opacity = '0';
+  cs.style.transition = 'opacity 0.6s';
+  setTimeout(() => {
+    cs.style.display = 'none';
+    cd.style.display = 'flex';
+    runCountdown(10);
+  }, 600);
+}
+
+function runCountdown(n) {
+  const el = document.getElementById('count-number');
+  el.textContent = n;
+  el.classList.remove('count-flash');
+  void el.offsetWidth; // reflow
+  el.classList.add('count-flash');
+
+  if (n > 0) {
+    setTimeout(() => runCountdown(n - 1), 1000);
+  } else {
+    el.textContent = '🚀';
+    setTimeout(showRocketScreen, 800);
+  }
+}
+
+function showRocketScreen() {
+  const cd = document.getElementById('countdown-screen');
+  const rs = document.getElementById('rocket-screen');
+
+  cd.style.opacity = '0';
+  cd.style.transition = 'opacity 0.5s';
+  setTimeout(() => {
+    cd.style.display = 'none';
+    rs.style.display = 'flex';
+    spawnConfetti(30);
+  }, 500);
+}
+
+function launchRocket() {
+  const rs = document.getElementById('rocket-screen');
+  const la = document.getElementById('rocket-launch-anim');
+
+  rs.style.display = 'none';
+  la.style.display = 'block';
+
+  spawnConfetti(80);
+
+  // After animation, show website
+  setTimeout(() => {
+    la.style.display = 'none';
+    showWebsite();
+  }, 2800);
+}
+
+function showWebsite() {
+  const wf = document.getElementById('website-frame');
+  wf.style.display = 'flex';
+  spawnConfetti(60);
+}
+</script>
+</body>
+</html>
