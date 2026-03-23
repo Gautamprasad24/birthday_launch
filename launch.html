@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VidyaTrade Launch 🚀</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #FFD700;
+    --deep-gold: #FFA500;
+    --space: #020818;
+    --mid: #0a1628;
+    --accent: #00f0ff;
+    --glow: #ff6b00;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--space);
+    font-family: 'Exo 2', sans-serif;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* ── STARS ── */
+  .stars {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  }
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) infinite ease-in-out alternate;
+  }
+  @keyframes twinkle { from { opacity: 0.2; } to { opacity: 1; } }
+
+  /* ── LAUNCH BUTTON SCREEN ── */
+  #btn-screen {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at center, #0d1f3c 0%, #020818 70%);
+  }
+  #btn-screen h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--gold);
+    text-align: center;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 40px rgba(255,215,0,0.5);
+    margin-bottom: 0.4em;
+    animation: pulse-text 2s ease-in-out infinite;
+  }
+  @keyframes pulse-text {
+    0%,100% { text-shadow: 0 0 30px rgba(255,215,0,0.4); }
+    50%      { text-shadow: 0 0 70px rgba(255,215,0,0.9), 0 0 120px rgba(255,165,0,0.4); }
+  }
+  #btn-screen p {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 3em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  #launch-btn {
+    position: relative;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 1.1em 3em;
+    background: linear-gradient(135deg, #FF6B00, #FFD700, #FF6B00);
+    background-size: 200% 200%;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    animation: btn-shine 3s linear infinite;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 0 30px rgba(255,107,0,0.6), 0 0 60px rgba(255,215,0,0.3);
+  }
+  @keyframes btn-shine { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+  #launch-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 50px rgba(255,107,0,0.9), 0 0 100px rgba(255,215,0,0.5);
+  }
+  #launch-btn:active { transform: scale(0.97); }
+
+  /* ── CURTAINS ── */
+  #curtain-stage {
+    position: fixed; inset: 0; z-index: 20;
+    display: none;
+    pointer-events: none;
+  }
+  .curtain {
+    position: absolute; top: 0; height: 100%;
+    width: 52%;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 2px,
+        transparent 2px, transparent 24px
+      ),
+      linear-gradient(180deg, #8B0000 0%, #CC2200 30%, #9B0000 60%, #6B0000 100%);
+    transition: transform 1.6s cubic-bezier(0.77,0,0.18,1);
+  }
+  .curtain-left  { left: 0;  transform-origin: left; }
+  .curtain-right { right: 0; transform-origin: right; }
+  .curtain-left.open  { transform: translateX(-100%); }
+  .curtain-right.open { transform: translateX(100%); }
+
+  /* gold valance */
+  #curtain-stage::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 60px; z-index: 30;
+    background: linear-gradient(135deg, #8B6914, #FFD700, #8B6914, #FFD700);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+
+  /* ── REVEAL SCREEN ── */
+  #reveal-screen {
+    position: fixed; inset: 0; z-index: 15;
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at center, #0d1f3c 0%, #020818 100%);
+    text-align: center; padding: 2rem;
+  }
+
+  /* message */
+  #launch-msg {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1rem, 3.5vw, 2rem);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.5;
+    max-width: 700px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    text-shadow: 0 0 30px rgba(255,215,0,0.5);
+    margin-bottom: 2rem;
+  }
+  #launch-msg.show { opacity: 1; transform: translateY(0); }
+
+  /* countdown */
+  #countdown-wrap {
+    display: none;
+    flex-direction: column; align-items: center;
+  }
+  #countdown-label {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  #countdown-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(4rem, 15vw, 10rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    text-shadow: 0 0 60px var(--accent), 0 0 120px var(--accent);
+    animation: cd-pop 1s ease-in-out;
+  }
+  @keyframes cd-pop {
+    0%   { transform: scale(1.4); opacity: 0; }
+    40%  { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* progress bar */
+  #cd-bar-wrap {
+    width: min(300px, 80vw);
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    margin-top: 1.2rem;
+    overflow: hidden;
+  }
+  #cd-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    width: 100%;
+    transform-origin: right;
+    transition: transform 1s linear;
+  }
+
+  /* ── ROCKET STAGE ── */
+  #rocket-stage {
+    display: none; flex-direction: column;
+    align-items: center;
+  }
+  .rocket-svg {
+    width: clamp(80px, 15vw, 130px);
+    animation: rocket-idle 0.4s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 20px var(--deep-gold));
+  }
+  @keyframes rocket-idle {
+    from { transform: translateY(0px) rotate(-2deg); }
+    to   { transform: translateY(-8px) rotate(2deg); }
+  }
+  .rocket-svg.launching {
+    animation: rocket-launch 1.8s ease-in forwards;
+  }
+  @keyframes rocket-launch {
+    0%   { transform: translateY(0) scale(1); opacity: 1; }
+    60%  { transform: translateY(-30vh) scale(0.7); opacity: 1; }
+    100% { transform: translateY(-120vh) scale(0.2); opacity: 0; }
+  }
+
+  #launch-word {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 8vw, 5rem);
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    background: linear-gradient(135deg, #FF6B00, #FFD700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 0.3em;
+    text-shadow: none;
+    filter: drop-shadow(0 0 20px rgba(255,200,0,0.7));
+    opacity: 0;
+    animation: word-appear 0.6s 0.3s forwards ease;
+  }
+  @keyframes word-appear {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* fireworks */
+  .firework {
+    position: fixed;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 50;
+  }
+
+  /* ── IFRAME SCREEN ── */
+  #site-screen {
+    position: fixed; inset: 0; z-index: 5;
+    display: none;
+  }
+  #site-screen iframe {
+    width: 100%; height: 100%;
+    border: none;
+  }
+  #site-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(2,8,24,0.92);
+    backdrop-filter: blur(10px);
+    padding: 0.6rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 100;
+    border-top: 1px solid rgba(255,215,0,0.3);
+  }
+  #site-bar span {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+  #site-bar a {
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── EXPLOSION flash ── */
+  #flash {
+    position: fixed; inset: 0; z-index: 80;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  #flash.on { opacity: 0.8; }
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Flash -->
+<div id="flash"></div>
+
+<!-- 1. Button Screen -->
+<div id="btn-screen">
+  <h1>🌟 VidyaTrade</h1>
+  <p>is ready for the world</p>
+  <button id="launch-btn" onclick="startSequence()">🚀 LAUNCH WEBSITE</button>
+</div>
+
+<!-- 2. Curtains -->
+<div id="curtain-stage">
+  <div class="curtain curtain-left"></div>
+  <div class="curtain curtain-right"></div>
+</div>
+
+<!-- 3. Reveal + Countdown + Rocket -->
+<div id="reveal-screen">
+  <div id="launch-msg">
+    🎉 Welcome to <span style="color:var(--accent)">VidyaTrade</span> — <br>
+    Your journey to smarter trading starts today!
+  </div>
+
+  <div id="countdown-wrap">
+    <div id="countdown-label">Launching in</div>
+    <div id="countdown-num">10</div>
+    <div id="cd-bar-wrap"><div id="cd-bar"></div></div>
+  </div>
+
+  <div id="rocket-stage">
+    <!-- Rocket SVG -->
+    <svg class="rocket-svg" id="rocket-svg" viewBox="0 0 100 180" xmlns="http://www.w3.org/2000/svg">
+      <!-- body -->
+      <ellipse cx="50" cy="80" rx="22" ry="55" fill="url(#rg1)"/>
+      <!-- nose -->
+      <ellipse cx="50" cy="30" rx="22" ry="30" fill="url(#rg2)"/>
+      <!-- window -->
+      <circle cx="50" cy="80" r="12" fill="url(#rg3)" stroke="#00f0ff" stroke-width="2"/>
+      <circle cx="50" cy="80" r="7" fill="#00d4ff" opacity="0.6"/>
+      <!-- fin left -->
+      <polygon points="28,125 14,155 34,140" fill="#CC3300"/>
+      <!-- fin right -->
+      <polygon points="72,125 86,155 66,140" fill="#CC3300"/>
+      <!-- nozzle -->
+      <rect x="42" y="130" width="16" height="10" rx="3" fill="#555"/>
+      <!-- flame 1 -->
+      <ellipse cx="50" cy="148" rx="9" ry="16" fill="url(#fg1)" opacity="0.9">
+        <animate attributeName="ry" values="16;20;14;18;16" dur="0.3s" repeatCount="indefinite"/>
+        <animate attributeName="cy" values="148;150;147;149;148" dur="0.3s" repeatCount="indefinite"/>
+      </ellipse>
+      <!-- flame 2 -->
+      <ellipse cx="50" cy="152" rx="5" ry="10" fill="#fff" opacity="0.7">
+        <animate attributeName="ry" values="10;13;9;12;10" dur="0.25s" repeatCount="indefinite"/>
+      </ellipse>
+      <defs>
+        <linearGradient id="rg1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#c0c0c0"/>
+          <stop offset="50%" stop-color="#f0f0f0"/>
+          <stop offset="100%" stop-color="#888"/>
+        </linearGradient>
+        <linearGradient id="rg2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFD700"/>
+          <stop offset="100%" stop-color="#FF6B00"/>
+        </linearGradient>
+        <radialGradient id="rg3">
+          <stop offset="0%" stop-color="#1a3a6b"/>
+          <stop offset="100%" stop-color="#0a1a3a"/>
+        </radialGradient>
+        <linearGradient id="fg1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFD700"/>
+          <stop offset="50%" stop-color="#FF4500"/>
+          <stop offset="100%" stop-color="#FF0000" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div id="launch-word">LAUNCH!</div>
+  </div>
+</div>
+
+<!-- 4. Website -->
+<div id="site-screen">
+  <iframe id="site-frame" src="" title="VidyaTrade Website"></iframe>
+  <div id="site-bar">
+    <span>🚀 VidyaTrade — Successfully Launched!</span>
+    <a href="https://www.vidyatrade.com" target="_blank">Open in new tab ↗</a>
+  </div>
+</div>
+
+<script>
+  /* ── Stars ── */
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 160; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      --d:${2+Math.random()*4}s;
+      animation-delay:${Math.random()*4}s;
+      opacity:${Math.random()*0.6+0.2};
+    `;
+    starsEl.appendChild(s);
+  }
+
+  /* ── Fireworks ── */
+  function spawnFirework() {
+    const colors = ['#FFD700','#FF4500','#00f0ff','#FF69B4','#7FFF00','#FF6B00'];
+    for (let i = 0; i < 28; i++) {
+      const el = document.createElement('div');
+      el.className = 'firework';
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight * 0.7;
+      el.style.cssText = `left:${x}px; top:${y}px; background:${colors[Math.floor(Math.random()*colors.length)]};`;
+      document.body.appendChild(el);
+      const angle = Math.random() * Math.PI * 2;
+      const dist  = 60 + Math.random() * 120;
+      el.animate([
+        { transform: 'translate(0,0) scale(1)', opacity: 1 },
+        { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }
+      ], { duration: 700 + Math.random()*500, easing: 'ease-out', fill: 'forwards' })
+        .onfinish = () => el.remove();
+    }
+  }
+
+  function flash() {
+    const f = document.getElementById('flash');
+    f.classList.add('on');
+    setTimeout(() => f.classList.remove('on'), 180);
+  }
+
+  /* ── Main Sequence ── */
+  function startSequence() {
+    // hide btn screen
+    document.getElementById('btn-screen').style.display = 'none';
+
+    // show curtains
+    const stage = document.getElementById('curtain-stage');
+    stage.style.display = 'block';
+
+    // open curtains after tiny delay
+    setTimeout(() => {
+      stage.querySelectorAll('.curtain').forEach(c => c.classList.add('open'));
+    }, 80);
+
+    // show reveal screen behind curtains
+    const reveal = document.getElementById('reveal-screen');
+    reveal.style.display = 'flex';
+
+    // after curtains open → show message
+    setTimeout(() => {
+      document.getElementById('launch-msg').classList.add('show');
+    }, 1800);
+
+    // after message → countdown
+    setTimeout(() => {
+      startCountdown();
+    }, 8000);
+  }
+
+  function startCountdown() {
+    const cdWrap = document.getElementById('countdown-wrap');
+    const cdNum  = document.getElementById('countdown-num');
+    const cdBar  = document.getElementById('cd-bar');
+    document.getElementById('launch-msg').style.display = 'none';
+    cdWrap.style.display = 'flex';
+
+    let count = 10;
+    cdNum.textContent = count;
+    cdBar.style.transform = 'scaleX(1)';
+
+    const interval = setInterval(() => {
+      count--;
+      cdNum.style.animation = 'none';
+      void cdNum.offsetWidth; // reflow
+      cdNum.style.animation = 'cd-pop 1s ease-in-out';
+      cdNum.textContent = count;
+      cdBar.style.transform = `scaleX(${count / 10})`;
+
+      if (count <= 3) spawnFirework();
+
+      if (count === 0) {
+        clearInterval(interval);
+        setTimeout(showRocket, 600);
+      }
+    }, 1000);
+  }
+
+  function showRocket() {
+    const cdWrap = document.getElementById('countdown-wrap');
+    cdWrap.style.display = 'none';
+
+    const rStage = document.getElementById('rocket-stage');
+    rStage.style.display = 'flex';
+
+    flash();
+    spawnFirework(); spawnFirework();
+
+    setTimeout(() => {
+      spawnFirework(); spawnFirework();
+      document.getElementById('rocket-svg').classList.add('launching');
+    }, 1200);
+
+    setTimeout(() => {
+      flash();
+      spawnFirework(); spawnFirework(); spawnFirework();
+    }, 1800);
+
+    // show website
+    setTimeout(showWebsite, 3200);
+  }
+
+  function showWebsite() {
+    document.getElementById('reveal-screen').style.display = 'none';
+    document.getElementById('curtain-stage').style.display = 'none';
+
+    const siteScreen = document.getElementById('site-screen');
+    siteScreen.style.display = 'block';
+    document.getElementById('site-frame').src = 'https://www.vidyatrade.com';
+
+    flash();
+    spawnFirework(); spawnFirework(); spawnFirework();
+    setTimeout(spawnFirework, 400);
+    setTimeout(spawnFirework, 800);
+  }
+</script>
+</body>
+</html>
