@@ -3,702 +3,520 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎂 Happy Birthday! 🚀</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Dancing+Script:wght@700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<title>VidyaTrade Launch 🚀</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --gold: #FFD700;
-    --pink: #FF6B9D;
-    --purple: #9B59B6;
-    --dark: #0a0010;
-    --star: #fff9c4;
+    --deep-gold: #FFA500;
+    --space: #020818;
+    --mid: #0a1628;
+    --accent: #00f0ff;
+    --glow: #ff6b00;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: var(--dark);
+    background: var(--space);
+    font-family: 'Exo 2', sans-serif;
+    color: #fff;
     overflow: hidden;
-    font-family: 'Playfair Display', serif;
     height: 100vh;
     width: 100vw;
   }
 
-  /* ========== STARS BACKGROUND ========== */
+  /* ── STARS ── */
   .stars {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
   }
   .star {
     position: absolute;
-    background: white;
+    background: #fff;
     border-radius: 50%;
-    animation: twinkle var(--d) ease-in-out infinite alternate;
+    animation: twinkle var(--d, 3s) infinite ease-in-out alternate;
   }
-  @keyframes twinkle {
-    from { opacity: 0.1; transform: scale(0.8); }
-    to   { opacity: 1;   transform: scale(1.2); }
-  }
+  @keyframes twinkle { from { opacity: 0.2; } to { opacity: 1; } }
 
-  /* ========== LAUNCH SCREEN ========== */
-  #launch-screen {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(ellipse at center, #1a0030 0%, #0a0010 70%);
+  /* ── LAUNCH BUTTON SCREEN ── */
+  #btn-screen {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at center, #0d1f3c 0%, #020818 70%);
   }
-
-  .launch-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(2rem, 6vw, 4rem);
+  #btn-screen h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-weight: 900;
     color: var(--gold);
     text-align: center;
-    margin-bottom: 12px;
-    text-shadow: 0 0 30px rgba(255,215,0,0.6);
-    animation: floatText 3s ease-in-out infinite;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 40px rgba(255,215,0,0.5);
+    margin-bottom: 0.4em;
+    animation: pulse-text 2s ease-in-out infinite;
   }
-  .launch-sub {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1rem, 3vw, 1.4rem);
-    color: #e8b4d8;
-    margin-bottom: 50px;
-    letter-spacing: 3px;
-    text-align: center;
+  @keyframes pulse-text {
+    0%,100% { text-shadow: 0 0 30px rgba(255,215,0,0.4); }
+    50%      { text-shadow: 0 0 70px rgba(255,215,0,0.9), 0 0 120px rgba(255,165,0,0.4); }
   }
-  @keyframes floatText {
-    0%,100% { transform: translateY(0); }
-    50%      { transform: translateY(-8px); }
+  #btn-screen p {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 3em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
   }
-
-  .btn-launch {
+  #launch-btn {
     position: relative;
-    padding: 20px 60px;
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    color: var(--dark);
-    background: linear-gradient(135deg, var(--gold), #FF8C42, var(--pink));
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 1.1em 3em;
+    background: linear-gradient(135deg, #FF6B00, #FFD700, #FF6B00);
+    background-size: 200% 200%;
+    color: #000;
     border: none;
-    border-radius: 60px;
     cursor: pointer;
-    box-shadow: 0 0 40px rgba(255,215,0,0.5), 0 0 80px rgba(255,107,157,0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-    overflow: hidden;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    animation: btn-shine 3s linear infinite;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 0 30px rgba(255,107,0,0.6), 0 0 60px rgba(255,215,0,0.3);
   }
-  .btn-launch::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 62px;
-    background: linear-gradient(135deg, var(--gold), var(--pink), var(--purple), var(--gold));
-    z-index: -1;
-    animation: borderSpin 3s linear infinite;
-    background-size: 300% 300%;
+  @keyframes btn-shine { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+  #launch-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 50px rgba(255,107,0,0.9), 0 0 100px rgba(255,215,0,0.5);
   }
-  @keyframes borderSpin {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  .btn-launch:hover {
-    transform: scale(1.07);
-    box-shadow: 0 0 60px rgba(255,215,0,0.8), 0 0 100px rgba(255,107,157,0.5);
-  }
-  .btn-launch:active { transform: scale(0.97); }
+  #launch-btn:active { transform: scale(0.97); }
 
-  .sparkle-row {
-    display: flex; gap: 18px; margin-top: 30px;
-    font-size: 2rem;
-    animation: sparkleRow 2s ease-in-out infinite;
-  }
-  @keyframes sparkleRow {
-    0%,100% { opacity: 0.7; transform: scale(1); }
-    50%      { opacity: 1;   transform: scale(1.1); }
-  }
-
-  /* ========== CURTAIN SCREEN ========== */
-  #curtain-screen {
-    position: fixed;
-    inset: 0;
-    z-index: 20;
+  /* ── CURTAINS ── */
+  #curtain-stage {
+    position: fixed; inset: 0; z-index: 20;
     display: none;
-    align-items: center;
-    justify-content: center;
+    pointer-events: none;
+  }
+  .curtain {
+    position: absolute; top: 0; height: 100%;
+    width: 52%;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 2px,
+        transparent 2px, transparent 24px
+      ),
+      linear-gradient(180deg, #8B0000 0%, #CC2200 30%, #9B0000 60%, #6B0000 100%);
+    transition: transform 1.6s cubic-bezier(0.77,0,0.18,1);
+  }
+  .curtain-left  { left: 0;  transform-origin: left; }
+  .curtain-right { right: 0; transform-origin: right; }
+  .curtain-left.open  { transform: translateX(-100%); }
+  .curtain-right.open { transform: translateX(100%); }
+
+  /* gold valance */
+  #curtain-stage::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 60px; z-index: 30;
+    background: linear-gradient(135deg, #8B6914, #FFD700, #8B6914, #FFD700);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+
+  /* ── REVEAL SCREEN ── */
+  #reveal-screen {
+    position: fixed; inset: 0; z-index: 15;
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at center, #0d1f3c 0%, #020818 100%);
+    text-align: center; padding: 2rem;
+  }
+
+  /* message */
+  #launch-msg {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1rem, 3.5vw, 2rem);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.5;
+    max-width: 700px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    text-shadow: 0 0 30px rgba(255,215,0,0.5);
+    margin-bottom: 2rem;
+  }
+  #launch-msg.show { opacity: 1; transform: translateY(0); }
+
+  /* countdown */
+  #countdown-wrap {
+    display: none;
+    flex-direction: column; align-items: center;
+  }
+  #countdown-label {
+    font-family: 'Exo 2', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  #countdown-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(4rem, 15vw, 10rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    text-shadow: 0 0 60px var(--accent), 0 0 120px var(--accent);
+    animation: cd-pop 1s ease-in-out;
+  }
+  @keyframes cd-pop {
+    0%   { transform: scale(1.4); opacity: 0; }
+    40%  { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* progress bar */
+  #cd-bar-wrap {
+    width: min(300px, 80vw);
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    margin-top: 1.2rem;
     overflow: hidden;
   }
-  .curtain-left, .curtain-right {
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 50%;
-    background: linear-gradient(135deg, #8B0057 0%, #C0006A 40%, #FF4499 70%, #8B0057 100%);
-    transition: transform 1.8s cubic-bezier(0.77, 0, 0.175, 1);
-    z-index: 2;
-  }
-  .curtain-left  { left: 0;  transform: translateX(0); }
-  .curtain-right { right: 0; transform: translateX(0); }
-
-  /* Curtain folds */
-  .curtain-left::before, .curtain-left::after,
-  .curtain-right::before, .curtain-right::after {
-    content: '';
-    position: absolute;
-    top: 0; bottom: 0;
-    width: 20px;
-    background: rgba(0,0,0,0.25);
-  }
-  .curtain-left::before  { right: 60px; }
-  .curtain-left::after   { right: 20px; }
-  .curtain-right::before { left: 60px; }
-  .curtain-right::after  { left: 20px; }
-
-  /* Gold fringe at top */
-  .curtain-top {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 40px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    z-index: 3;
+  #cd-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    width: 100%;
+    transform-origin: right;
+    transition: transform 1s linear;
   }
 
-  .curtain-open .curtain-left  { transform: translateX(-100%); }
-  .curtain-open .curtain-right { transform: translateX(100%); }
-
-  /* Behind curtain: birthday reveal */
-  .curtain-reveal {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
+  /* ── ROCKET STAGE ── */
+  #rocket-stage {
+    display: none; flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background: radial-gradient(ellipse at center, #200040 0%, var(--dark) 80%);
-    z-index: 1;
-    text-align: center;
-    padding: 20px;
+  }
+  .rocket-svg {
+    width: clamp(80px, 15vw, 130px);
+    animation: rocket-idle 0.4s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 20px var(--deep-gold));
+  }
+  @keyframes rocket-idle {
+    from { transform: translateY(0px) rotate(-2deg); }
+    to   { transform: translateY(-8px) rotate(2deg); }
+  }
+  .rocket-svg.launching {
+    animation: rocket-launch 1.8s ease-in forwards;
+  }
+  @keyframes rocket-launch {
+    0%   { transform: translateY(0) scale(1); opacity: 1; }
+    60%  { transform: translateY(-30vh) scale(0.7); opacity: 1; }
+    100% { transform: translateY(-120vh) scale(0.2); opacity: 0; }
   }
 
-  .hb-emoji { font-size: clamp(3rem, 8vw, 6rem); animation: bounceEmoji 0.6s ease-in-out infinite alternate; }
-  @keyframes bounceEmoji { from { transform: translateY(0) rotate(-5deg); } to { transform: translateY(-14px) rotate(5deg); } }
-
-  .hb-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(2.5rem, 8vw, 6rem);
-    background: linear-gradient(135deg, var(--gold), var(--pink), #ff9de2, var(--gold));
-    background-size: 300%;
+  #launch-word {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2rem, 8vw, 5rem);
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    background: linear-gradient(135deg, #FF6B00, #FFD700);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shimmer 2s linear infinite, fadeInUp 1s ease 2.5s both;
-    line-height: 1.1;
-  }
-  @keyframes shimmer { 0%{background-position:0%} 100%{background-position:300%} }
-  @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-
-  .hb-sub {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1rem, 3vw, 1.6rem);
-    color: #e8b4d8;
-    letter-spacing: 4px;
-    margin-top: 10px;
-    animation: fadeInUp 1s ease 3s both;
-  }
-
-  /* ========== COUNTDOWN SCREEN ========== */
-  #countdown-screen {
-    position: fixed;
-    inset: 0;
-    z-index: 30;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(ellipse at center, #0d0025 0%, #000008 80%);
-  }
-
-  .countdown-label {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(0.8rem, 2vw, 1rem);
-    color: var(--pink);
-    letter-spacing: 8px;
-    margin-bottom: 20px;
+    background-clip: text;
+    margin-top: 0.3em;
+    text-shadow: none;
+    filter: drop-shadow(0 0 20px rgba(255,200,0,0.7));
     opacity: 0;
-    animation: fadeInUp 0.5s ease 0.3s forwards;
+    animation: word-appear 0.6s 0.3s forwards ease;
+  }
+  @keyframes word-appear {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
   }
 
-  #count-number {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(5rem, 20vw, 14rem);
-    font-weight: 900;
-    color: var(--gold);
-    text-shadow: 0 0 40px rgba(255,215,0,0.8), 0 0 80px rgba(255,215,0,0.4);
-    line-height: 1;
-    animation: countPulse 1s ease-in-out infinite;
-    transition: all 0.3s;
-  }
-  @keyframes countPulse {
-    0%,100% { transform: scale(1); }
-    50%      { transform: scale(1.05); }
-  }
-  .count-flash {
-    animation: flash 0.3s ease !important;
-  }
-  @keyframes flash {
-    0%   { color: white; text-shadow: 0 0 80px white; transform: scale(1.3); }
-    100% { color: var(--gold); text-shadow: 0 0 40px rgba(255,215,0,0.8); transform: scale(1); }
-  }
-
-  .countdown-rings {
-    position: absolute;
-    width: 300px; height: 300px;
+  /* fireworks */
+  .firework {
+    position: fixed;
+    width: 6px; height: 6px;
     border-radius: 50%;
-    border: 2px solid rgba(255,215,0,0.15);
-    animation: expandRing 1s ease-out infinite;
-  }
-  .countdown-rings:nth-child(2) { animation-delay: 0.3s; }
-  .countdown-rings:nth-child(3) { animation-delay: 0.6s; }
-  @keyframes expandRing {
-    0%   { transform: scale(0.5); opacity: 0.8; }
-    100% { transform: scale(2);   opacity: 0; }
-  }
-
-  /* ========== ROCKET SCREEN ========== */
-  #rocket-screen {
-    position: fixed;
-    inset: 0;
-    z-index: 40;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(ellipse at center, #050015 0%, #000005 80%);
-    overflow: hidden;
-  }
-
-  .rocket-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: rocketHover 2s ease-in-out infinite;
-  }
-  @keyframes rocketHover {
-    0%,100% { transform: translateY(0); }
-    50%      { transform: translateY(-15px); }
-  }
-
-  .rocket-svg { width: clamp(100px, 20vw, 160px); filter: drop-shadow(0 0 20px rgba(255,165,0,0.8)); }
-
-  .flame {
-    width: clamp(30px, 6vw, 50px);
-    margin-top: -4px;
-    animation: flameFlicker 0.15s ease-in-out infinite alternate;
-    transform-origin: top center;
-  }
-  @keyframes flameFlicker {
-    from { transform: scaleY(1) scaleX(1); }
-    to   { transform: scaleY(1.2) scaleX(0.85); }
-  }
-
-  .launch-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(2rem, 6vw, 4rem);
-    font-weight: 900;
-    color: white;
-    letter-spacing: 10px;
-    margin-top: 40px;
-    text-shadow: 0 0 30px rgba(255,165,0,0.9);
-    animation: launchPulse 0.8s ease-in-out infinite alternate;
-  }
-  @keyframes launchPulse {
-    from { text-shadow: 0 0 20px orange; letter-spacing: 8px; }
-    to   { text-shadow: 0 0 50px orange, 0 0 100px rgba(255,165,0,0.5); letter-spacing: 12px; }
-  }
-
-  .rocket-launch-btn {
-    margin-top: 40px;
-    padding: 16px 50px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(1rem, 3vw, 1.3rem);
-    font-weight: 700;
-    color: var(--dark);
-    background: linear-gradient(135deg, #FF8C00, var(--gold));
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    letter-spacing: 3px;
-    box-shadow: 0 0 30px rgba(255,140,0,0.6);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .rocket-launch-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 60px rgba(255,140,0,0.9);
-  }
-
-  /* ========== ROCKET LAUNCH ANIMATION ========== */
-  #rocket-launch-anim {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    display: none;
-    overflow: hidden;
-    background: #000010;
-  }
-
-  .speed-stars {
-    position: absolute;
-    inset: 0;
-  }
-  .speed-line {
-    position: absolute;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, white);
-    animation: speedLine var(--spd) linear infinite;
-    opacity: 0;
-  }
-  @keyframes speedLine {
-    0%   { transform: translateX(-100%); opacity: 0; }
-    10%  { opacity: 1; }
-    90%  { opacity: 1; }
-    100% { transform: translateX(200%); opacity: 0; }
-  }
-
-  #flying-rocket {
-    position: absolute;
-    left: 50%;
-    bottom: -200px;
-    transform: translateX(-50%);
-    font-size: 80px;
-    animation: rocketFly 2s ease-in forwards;
-    filter: drop-shadow(0 0 20px orange);
-  }
-  @keyframes rocketFly {
-    0%   { bottom: -200px; opacity: 1; }
-    60%  { bottom: 50%; opacity: 1; }
-    80%  { bottom: 60%; opacity: 1; }
-    100% { bottom: 110%; opacity: 0; }
-  }
-
-  .launch-boom {
-    position: absolute;
-    left: 50%; top: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 200px;
-    opacity: 0;
-    animation: boom 0.6s ease-out 1.8s forwards;
-  }
-  @keyframes boom {
-    0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
-    100% { opacity: 0; transform: translate(-50%, -50%) scale(3); }
-  }
-
-  /* ========== CONFETTI ========== */
-  .confetti-piece {
-    position: fixed;
-    width: 10px; height: 14px;
-    top: -20px;
-    border-radius: 2px;
-    animation: confettiFall var(--fall) linear var(--delay) forwards;
-    z-index: 100;
-  }
-  @keyframes confettiFall {
-    0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg) translateX(var(--drift)); opacity: 0; }
-  }
-
-  /* iframe */
-  #website-frame {
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    display: none;
-    flex-direction: column;
-  }
-  #website-frame iframe {
-    flex: 1;
-    border: none;
-    width: 100%;
-    height: 100%;
-  }
-  .website-banner {
-    background: linear-gradient(135deg, var(--purple), var(--pink));
-    color: white;
-    text-align: center;
-    padding: 8px;
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.2rem;
-  }
-
-  /* Particles */
-  .particle {
-    position: fixed;
     pointer-events: none;
-    z-index: 200;
-    font-size: 1.5rem;
-    animation: particleFly var(--pt) ease-out forwards;
+    z-index: 50;
   }
-  @keyframes particleFly {
-    0%   { transform: translate(0,0) scale(1); opacity: 1; }
-    100% { transform: translate(var(--px), var(--py)) scale(0); opacity: 0; }
+
+  /* ── IFRAME SCREEN ── */
+  #site-screen {
+    position: fixed; inset: 0; z-index: 5;
+    display: none;
   }
+  #site-screen iframe {
+    width: 100%; height: 100%;
+    border: none;
+  }
+  #site-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(2,8,24,0.92);
+    backdrop-filter: blur(10px);
+    padding: 0.6rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 100;
+    border-top: 1px solid rgba(255,215,0,0.3);
+  }
+  #site-bar span {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+  #site-bar a {
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── EXPLOSION flash ── */
+  #flash {
+    position: fixed; inset: 0; z-index: 80;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  #flash.on { opacity: 0.8; }
 </style>
 </head>
 <body>
 
-<!-- Stars BG -->
+<!-- Stars -->
 <div class="stars" id="stars"></div>
 
-<!-- ===== SCREEN 1: LAUNCH BUTTON ===== -->
-<div id="launch-screen">
-  <div class="launch-title">🎂 A Special Surprise Awaits You! 🎂</div>
-  <div class="launch-sub">✨ CLICK TO BEGIN YOUR JOURNEY ✨</div>
-  <button class="btn-launch" onclick="startCurtain()">
-    🎀 Click Here, Sis! 🎀
-  </button>
-  <div class="sparkle-row">✨ 🌸 💖 🌸 ✨</div>
+<!-- Flash -->
+<div id="flash"></div>
+
+<!-- 1. Button Screen -->
+<div id="btn-screen">
+  <h1>🌟 VidyaTrade</h1>
+  <p>is ready for the world</p>
+  <button id="launch-btn" onclick="startSequence()">🚀 LAUNCH WEBSITE</button>
 </div>
 
-<!-- ===== SCREEN 2: CURTAIN ===== -->
-<div id="curtain-screen">
-  <div class="curtain-top"></div>
-  <div class="curtain-left"></div>
-  <div class="curtain-right"></div>
-  <div class="curtain-reveal">
-    <div class="hb-emoji">🎉</div>
-    <div class="hb-title">Happy Birthday<br>Sister!</div>
-    <div class="hb-sub">💖 You are so loved 💖</div>
+<!-- 2. Curtains -->
+<div id="curtain-stage">
+  <div class="curtain curtain-left"></div>
+  <div class="curtain curtain-right"></div>
+</div>
+
+<!-- 3. Reveal + Countdown + Rocket -->
+<div id="reveal-screen">
+  <div id="launch-msg">
+    🎉 Welcome to <span style="color:var(--accent)">VidyaTrade</span> — <br>
+    Your journey to smarter trading starts today!
   </div>
-</div>
 
-<!-- ===== SCREEN 3: COUNTDOWN ===== -->
-<div id="countdown-screen">
-  <div class="countdown-rings"></div>
-  <div class="countdown-rings"></div>
-  <div class="countdown-rings"></div>
-  <div class="countdown-label">🚀 LAUNCHING IN...</div>
-  <div id="count-number">10</div>
-</div>
+  <div id="countdown-wrap">
+    <div id="countdown-label">Launching in</div>
+    <div id="countdown-num">10</div>
+    <div id="cd-bar-wrap"><div id="cd-bar"></div></div>
+  </div>
 
-<!-- ===== SCREEN 4: ROCKET ===== -->
-<div id="rocket-screen">
-  <div class="rocket-wrapper">
+  <div id="rocket-stage">
     <!-- Rocket SVG -->
-    <svg class="rocket-svg" viewBox="0 0 100 180" xmlns="http://www.w3.org/2000/svg">
-      <!-- Body -->
-      <ellipse cx="50" cy="80" rx="22" ry="55" fill="#e8e8f0"/>
-      <ellipse cx="50" cy="80" rx="22" ry="55" fill="url(#rocketGrad)"/>
-      <!-- Nose -->
-      <ellipse cx="50" cy="28" rx="22" ry="28" fill="#FF4499"/>
-      <path d="M28 52 Q50 10 72 52 Z" fill="#FF4499"/>
-      <!-- Window -->
-      <circle cx="50" cy="72" r="12" fill="#4fc3f7" stroke="#aaa" stroke-width="2"/>
-      <circle cx="50" cy="72" r="8"  fill="#81d4fa"/>
-      <circle cx="46" cy="68" r="3"  fill="rgba(255,255,255,0.6)"/>
-      <!-- Fins -->
-      <path d="M28 110 L10 145 L28 130 Z" fill="#FF6B9D"/>
-      <path d="M72 110 L90 145 L72 130 Z" fill="#FF6B9D"/>
-      <!-- Stripe -->
-      <rect x="30" y="90" width="40" height="8" rx="4" fill="#FF4499" opacity="0.7"/>
+    <svg class="rocket-svg" id="rocket-svg" viewBox="0 0 100 180" xmlns="http://www.w3.org/2000/svg">
+      <!-- body -->
+      <ellipse cx="50" cy="80" rx="22" ry="55" fill="url(#rg1)"/>
+      <!-- nose -->
+      <ellipse cx="50" cy="30" rx="22" ry="30" fill="url(#rg2)"/>
+      <!-- window -->
+      <circle cx="50" cy="80" r="12" fill="url(#rg3)" stroke="#00f0ff" stroke-width="2"/>
+      <circle cx="50" cy="80" r="7" fill="#00d4ff" opacity="0.6"/>
+      <!-- fin left -->
+      <polygon points="28,125 14,155 34,140" fill="#CC3300"/>
+      <!-- fin right -->
+      <polygon points="72,125 86,155 66,140" fill="#CC3300"/>
+      <!-- nozzle -->
+      <rect x="42" y="130" width="16" height="10" rx="3" fill="#555"/>
+      <!-- flame 1 -->
+      <ellipse cx="50" cy="148" rx="9" ry="16" fill="url(#fg1)" opacity="0.9">
+        <animate attributeName="ry" values="16;20;14;18;16" dur="0.3s" repeatCount="indefinite"/>
+        <animate attributeName="cy" values="148;150;147;149;148" dur="0.3s" repeatCount="indefinite"/>
+      </ellipse>
+      <!-- flame 2 -->
+      <ellipse cx="50" cy="152" rx="5" ry="10" fill="#fff" opacity="0.7">
+        <animate attributeName="ry" values="10;13;9;12;10" dur="0.25s" repeatCount="indefinite"/>
+      </ellipse>
       <defs>
-        <linearGradient id="rocketGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%"   stop-color="#c8c8d8"/>
-          <stop offset="50%"  stop-color="#f0f0ff"/>
-          <stop offset="100%" stop-color="#a0a0b0"/>
+        <linearGradient id="rg1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#c0c0c0"/>
+          <stop offset="50%" stop-color="#f0f0f0"/>
+          <stop offset="100%" stop-color="#888"/>
+        </linearGradient>
+        <linearGradient id="rg2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFD700"/>
+          <stop offset="100%" stop-color="#FF6B00"/>
+        </linearGradient>
+        <radialGradient id="rg3">
+          <stop offset="0%" stop-color="#1a3a6b"/>
+          <stop offset="100%" stop-color="#0a1a3a"/>
+        </radialGradient>
+        <linearGradient id="fg1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FFD700"/>
+          <stop offset="50%" stop-color="#FF4500"/>
+          <stop offset="100%" stop-color="#FF0000" stop-opacity="0"/>
         </linearGradient>
       </defs>
     </svg>
-    <!-- Flame -->
-    <svg class="flame" viewBox="0 0 50 60" xmlns="http://www.w3.org/2000/svg">
-      <path d="M25 0 Q10 20 15 40 Q20 55 25 60 Q30 55 35 40 Q40 20 25 0 Z" fill="url(#flameGrad)"/>
-      <path d="M25 15 Q17 30 20 45 Q22 54 25 60 Q28 54 30 45 Q33 30 25 15 Z" fill="rgba(255,255,180,0.8)"/>
-      <defs>
-        <linearGradient id="flameGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stop-color="#fff176"/>
-          <stop offset="40%"  stop-color="#FF8C00"/>
-          <stop offset="100%" stop-color="#FF3300"/>
-        </linearGradient>
-      </defs>
-    </svg>
+    <div id="launch-word">LAUNCH!</div>
   </div>
-  <div class="launch-text">LAUNCH</div>
-  <button class="rocket-launch-btn" onclick="launchRocket()">🚀 LAUNCH NOW! 🚀</button>
 </div>
 
-<!-- ===== SCREEN 5: ROCKET LAUNCH ANIMATION ===== -->
-<div id="rocket-launch-anim">
-  <div class="speed-stars" id="speed-stars"></div>
-  <div id="flying-rocket">🚀</div>
-  <div class="launch-boom">💥</div>
-</div>
-
-<!-- ===== SCREEN 6: WEBSITE ===== -->
-<div id="website-frame">
-  <div class="website-banner">🎂 Happy Birthday Sister! Welcome to VidyaTrade 🚀</div>
-  <iframe src="https://www.vidyatrade.com" title="VidyaTrade"></iframe>
+<!-- 4. Website -->
+<div id="site-screen">
+  <iframe id="site-frame" src="" title="VidyaTrade Website"></iframe>
+  <div id="site-bar">
+    <span>🚀 VidyaTrade — Successfully Launched!</span>
+    <a href="https://www.vidyatrade.com" target="_blank">Open in new tab ↗</a>
+  </div>
 </div>
 
 <script>
-// ====== STARS ======
-const starsEl = document.getElementById('stars');
-for (let i = 0; i < 120; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  const size = Math.random() * 3 + 1;
-  s.style.cssText = `
-    width:${size}px; height:${size}px;
-    left:${Math.random()*100}%;
-    top:${Math.random()*100}%;
-    --d:${Math.random()*3+2}s;
-    animation-delay:${Math.random()*3}s;
-  `;
-  starsEl.appendChild(s);
-}
-
-// ====== SPEED LINES ======
-const speedStars = document.getElementById('speed-stars');
-for (let i = 0; i < 30; i++) {
-  const l = document.createElement('div');
-  l.className = 'speed-line';
-  const w = Math.random()*200 + 100;
-  l.style.cssText = `
-    top:${Math.random()*100}%;
-    width:${w}px;
-    --spd:${Math.random()*0.5+0.3}s;
-    animation-delay:${Math.random()*0.5}s;
-  `;
-  speedStars.appendChild(l);
-}
-
-// ====== CONFETTI ======
-const colors = ['#FFD700','#FF6B9D','#9B59B6','#4FC3F7','#FF8C42','#fff'];
-function spawnConfetti(n = 60) {
-  for (let i = 0; i < n; i++) {
-    const c = document.createElement('div');
-    c.className = 'confetti-piece';
-    const drift = (Math.random()-0.5)*300;
-    c.style.cssText = `
-      left:${Math.random()*100}vw;
-      background:${colors[Math.floor(Math.random()*colors.length)]};
-      --fall:${Math.random()*3+2}s;
-      --delay:${Math.random()*2}s;
-      --drift:${drift}px;
-      transform:rotate(${Math.random()*360}deg);
+  /* ── Stars ── */
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 160; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      --d:${2+Math.random()*4}s;
+      animation-delay:${Math.random()*4}s;
+      opacity:${Math.random()*0.6+0.2};
     `;
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 5500);
+    starsEl.appendChild(s);
   }
-}
 
-// ====== PARTICLES ON CLICK ======
-document.querySelector('.btn-launch').addEventListener('click', function(e) {
-  for (let i = 0; i < 12; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const angle = (i / 12) * 360;
-    const dist  = Math.random() * 120 + 60;
-    const rad   = angle * Math.PI / 180;
-    p.textContent = ['✨','🌸','💖','⭐','🎊'][Math.floor(Math.random()*5)];
-    p.style.cssText = `
-      left:${e.clientX}px; top:${e.clientY}px;
-      --px:${Math.cos(rad)*dist}px;
-      --py:${Math.sin(rad)*dist}px;
-      --pt:${Math.random()*0.6+0.4}s;
-    `;
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 1200);
+  /* ── Fireworks ── */
+  function spawnFirework() {
+    const colors = ['#FFD700','#FF4500','#00f0ff','#FF69B4','#7FFF00','#FF6B00'];
+    for (let i = 0; i < 28; i++) {
+      const el = document.createElement('div');
+      el.className = 'firework';
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight * 0.7;
+      el.style.cssText = `left:${x}px; top:${y}px; background:${colors[Math.floor(Math.random()*colors.length)]};`;
+      document.body.appendChild(el);
+      const angle = Math.random() * Math.PI * 2;
+      const dist  = 60 + Math.random() * 120;
+      el.animate([
+        { transform: 'translate(0,0) scale(1)', opacity: 1 },
+        { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) scale(0)`, opacity: 0 }
+      ], { duration: 700 + Math.random()*500, easing: 'ease-out', fill: 'forwards' })
+        .onfinish = () => el.remove();
+    }
   }
-});
 
-// ====== SCREEN TRANSITIONS ======
+  function flash() {
+    const f = document.getElementById('flash');
+    f.classList.add('on');
+    setTimeout(() => f.classList.remove('on'), 180);
+  }
 
-function startCurtain() {
-  const ls = document.getElementById('launch-screen');
-  const cs = document.getElementById('curtain-screen');
+  /* ── Main Sequence ── */
+  function startSequence() {
+    // hide btn screen
+    document.getElementById('btn-screen').style.display = 'none';
 
-  ls.style.opacity = '0';
-  ls.style.transition = 'opacity 0.5s';
+    // show curtains
+    const stage = document.getElementById('curtain-stage');
+    stage.style.display = 'block';
 
-  setTimeout(() => {
-    ls.style.display = 'none';
-    cs.style.display = 'flex';
-    spawnConfetti(40);
-
-    // Open curtains after short pause
+    // open curtains after tiny delay
     setTimeout(() => {
-      cs.classList.add('curtain-open');
-      // After curtains open, wait then show countdown
-      setTimeout(() => {
-        showCountdown();
-      }, 12400);
-    }, 600);
-  }, 500);
-}
+      stage.querySelectorAll('.curtain').forEach(c => c.classList.add('open'));
+    }, 80);
 
-function showCountdown() {
-  const cs = document.getElementById('curtain-screen');
-  const cd = document.getElementById('countdown-screen');
+    // show reveal screen behind curtains
+    const reveal = document.getElementById('reveal-screen');
+    reveal.style.display = 'flex';
 
-  cs.style.opacity = '0';
-  cs.style.transition = 'opacity 0.6s';
-  setTimeout(() => {
-    cs.style.display = 'none';
-    cd.style.display = 'flex';
-    runCountdown(10);
-  }, 600);
-}
+    // after curtains open → show message
+    setTimeout(() => {
+      document.getElementById('launch-msg').classList.add('show');
+    }, 1800);
 
-function runCountdown(n) {
-  const el = document.getElementById('count-number');
-  el.textContent = n;
-  el.classList.remove('count-flash');
-  void el.offsetWidth; // reflow
-  el.classList.add('count-flash');
-
-  if (n > 0) {
-    setTimeout(() => runCountdown(n - 1), 1000);
-  } else {
-    el.textContent = '🚀';
-    setTimeout(showRocketScreen, 800);
+    // after message → countdown
+    setTimeout(() => {
+      startCountdown();
+    }, 8000);
   }
-}
 
-function showRocketScreen() {
-  const cd = document.getElementById('countdown-screen');
-  const rs = document.getElementById('rocket-screen');
+  function startCountdown() {
+    const cdWrap = document.getElementById('countdown-wrap');
+    const cdNum  = document.getElementById('countdown-num');
+    const cdBar  = document.getElementById('cd-bar');
+    document.getElementById('launch-msg').style.display = 'none';
+    cdWrap.style.display = 'flex';
 
-  cd.style.opacity = '0';
-  cd.style.transition = 'opacity 0.5s';
-  setTimeout(() => {
-    cd.style.display = 'none';
-    rs.style.display = 'flex';
-    spawnConfetti(30);
-  }, 500);
-}
+    let count = 10;
+    cdNum.textContent = count;
+    cdBar.style.transform = 'scaleX(1)';
 
-function launchRocket() {
-  const rs = document.getElementById('rocket-screen');
-  const la = document.getElementById('rocket-launch-anim');
+    const interval = setInterval(() => {
+      count--;
+      cdNum.style.animation = 'none';
+      void cdNum.offsetWidth; // reflow
+      cdNum.style.animation = 'cd-pop 1s ease-in-out';
+      cdNum.textContent = count;
+      cdBar.style.transform = `scaleX(${count / 10})`;
 
-  rs.style.display = 'none';
-  la.style.display = 'block';
+      if (count <= 3) spawnFirework();
 
-  spawnConfetti(80);
+      if (count === 0) {
+        clearInterval(interval);
+        setTimeout(showRocket, 600);
+      }
+    }, 1000);
+  }
 
-  // After animation, show website
-  setTimeout(() => {
-    la.style.display = 'none';
-    showWebsite();
-  }, 2800);
-}
+  function showRocket() {
+    const cdWrap = document.getElementById('countdown-wrap');
+    cdWrap.style.display = 'none';
 
-function showWebsite() {
-  const wf = document.getElementById('website-frame');
-  wf.style.display = 'flex';
-  spawnConfetti(60);
-}
+    const rStage = document.getElementById('rocket-stage');
+    rStage.style.display = 'flex';
+
+    flash();
+    spawnFirework(); spawnFirework();
+
+    setTimeout(() => {
+      spawnFirework(); spawnFirework();
+      document.getElementById('rocket-svg').classList.add('launching');
+    }, 1200);
+
+    setTimeout(() => {
+      flash();
+      spawnFirework(); spawnFirework(); spawnFirework();
+    }, 1800);
+
+    // show website
+    setTimeout(showWebsite, 3200);
+  }
+
+  function showWebsite() {
+    document.getElementById('reveal-screen').style.display = 'none';
+    document.getElementById('curtain-stage').style.display = 'none';
+
+    const siteScreen = document.getElementById('site-screen');
+    siteScreen.style.display = 'block';
+    document.getElementById('site-frame').src = 'https://www.vidyatrade.com';
+
+    flash();
+    spawnFirework(); spawnFirework(); spawnFirework();
+    setTimeout(spawnFirework, 400);
+    setTimeout(spawnFirework, 800);
+  }
 </script>
 </body>
 </html>
